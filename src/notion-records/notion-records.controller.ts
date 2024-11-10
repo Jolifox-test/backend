@@ -17,7 +17,7 @@ export class NotionRecordsController {
 
   @Post()
   create(@Body() createNotionRecordDto: CreateNotionRecordDto) {
-    return this.notionRecordsService.create();
+    return this.notionRecordsService.create(createNotionRecordDto);
   }
 
   @Get(":id")
