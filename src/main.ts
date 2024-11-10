@@ -6,9 +6,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-    .setTitle("Jolifox notion record api test")
+    .setTitle("Jolifox test Notion Record API")
     .setDescription("API documentation")
-    .setVersion("1.0")
     .addTag("nestjs")
     .build();
 
@@ -16,6 +15,7 @@ async function bootstrap() {
   SwaggerModule.setup("api-docs", app, document);
 
   app.enableCors();
-  await app.listen(3000);
+  await app.listen(process.env.PORT || 3000);
 }
+
 bootstrap();

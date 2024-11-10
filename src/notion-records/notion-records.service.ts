@@ -75,9 +75,8 @@ export class NotionRecordsService {
 
     try {
       for (const page of response.results) {
-        const pageId = page.id;
         await this.notion.pages.update({
-          page_id: pageId,
+          page_id: page.id,
           archived: true,
         });
       }
