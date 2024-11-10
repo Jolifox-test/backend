@@ -3,9 +3,9 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
+  Put,
 } from "@nestjs/common";
 import { NotionRecordsService } from "./notion-records.service";
 import { CreateNotionRecordDto } from "./dto/create-notion-record.dto";
@@ -17,20 +17,15 @@ export class NotionRecordsController {
 
   @Post()
   create(@Body() createNotionRecordDto: CreateNotionRecordDto) {
-    return this.notionRecordsService.create(createNotionRecordDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.notionRecordsService.findAll();
+    return this.notionRecordsService.create();
   }
 
   @Get(":id")
   findOne(@Param("id") id: string) {
-    return this.notionRecordsService.findOne(+id);
+    return this.notionRecordsService.findOne(id);
   }
 
-  @Patch(":id")
+  @Put(":id")
   update(
     @Param("id") id: string,
     @Body() updateNotionRecordDto: UpdateNotionRecordDto,
