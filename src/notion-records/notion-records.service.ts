@@ -14,12 +14,67 @@ export class NotionRecordsService {
   }
 
   async create(createNotionRecordDto: CreateNotionRecordDto) {
-    // const response = await this.notion.pages.create({
-    //   parent: { database_id: this.databaseId },
-    //   properties: {},
-    // });
-    // console.log("Page created with only required fields:", response);
-    return "test";
+    const properties: any = {};
+
+    for (const [key, value] of Object.entries(createNotionRecordDto)) {
+      if (value !== undefined) {
+        switch (key) {
+          case "Company":
+            properties.Company = {
+              title: [{ text: { content: value } }],
+            };
+            break;
+          case "ImageContent":
+            properties["image content"] = {
+              rich_text: [{ text: { content: value } }],
+            };
+            break;
+          case "Campaign":
+          case "Description":
+          case "Content":
+          case "Where":
+            properties[key] = {
+              rich_text: [{ text: { content: value } }],
+            };
+            break;
+          case "Language":
+            properties.Language = {
+              select: { name: value },
+            };
+            break;
+          case "PlannedDate":
+            properties.PlannedDate = {
+              date: {
+                start: value.start,
+                end: value.end ?? null,
+              },
+            };
+            break;
+          case "Image":
+            properties.Image = {
+              files: value.map((file: any) => ({
+                type: file.type,
+                name: file.name,
+                ...(file.type === "external"
+                  ? { external: { url: file.external } }
+                  : { file: { url: file.file } }),
+              })),
+            };
+            break;
+          default:
+            console.warn(`Unhandled property: ${key}`);
+        }
+      }
+    }
+
+    try {
+      await this.notion.pages.create({
+        parent: { database_id: this.databaseId },
+        properties,
+      });
+    } catch (error) {
+      utils.treatUnexpectedError(error);
+    }
   }
 
   async findOne(id: string) {
