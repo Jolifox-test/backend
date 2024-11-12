@@ -35,6 +35,6 @@ export class NotionRecordsController {
 
   @Delete(":id")
   remove(@Param("id") id: string) {
-    return this.notionRecordsService.remove(+id);
+    return this.notionRecordsService.remove(id);
   }
 }
