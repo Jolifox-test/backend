@@ -30,7 +30,7 @@ export class NotionRecordsController {
     @Param("id") id: string,
     @Body() updateNotionRecordDto: UpdateNotionRecordDto,
   ) {
-    return this.notionRecordsService.update(+id, updateNotionRecordDto);
+    return this.notionRecordsService.update(id, updateNotionRecordDto);
   }
 
   @Delete(":id")

@@ -3,47 +3,11 @@ import {
   IsOptional,
   IsString,
   ValidateNested,
-  IsDateString,
   IsArray,
-  IsIn,
 } from "class-validator";
 import { Type } from "class-transformer";
-
-class ImageFile {
-  @IsNotEmpty({
-    message: " O campo 'type' é obrigatório e deve ser 'external' ou 'file'.",
-  })
-  @IsIn(["external", "file"], {
-    message: " O campo 'type' deve ser 'external' ou 'file'.",
-  })
-  type: "external" | "file";
-
-  @IsString({ message: " O campo 'name' deve ser uma string." })
-  name: string;
-
-  @IsOptional()
-  @IsString({ message: " O campo 'external' deve ser uma string." })
-  external?: { url: string };
-
-  @IsOptional()
-  @IsString({ message: " O campo 'file' deve ser uma string." })
-  file?: { url: string };
-}
-
-class PlannedDate {
-  @IsDateString(
-    {},
-    { message: " O campo 'start' deve ser uma data no formato ISO 8601." },
-  )
-  start: string;
-
-  @IsOptional()
-  @IsDateString(
-    {},
-    { message: " O campo 'end' deve ser uma data no formato ISO 8601." },
-  )
-  end?: string;
-}
+import PlannedDate from "./ValidationClasses/PlannedDate";
+import ImageFile from "./ValidationClasses/ImageFile";
 
 export class CreateNotionRecordDto {
   @IsNotEmpty({ message: "O campo 'Company' é obrigatório." })
