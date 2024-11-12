@@ -7,7 +7,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-    .setTitle("Jolifox test Notion Record API")
+    .setTitle("Jolifox Test Notion Record API")
     .setDescription("API documentation")
     .addTag("nestjs")
     .build();
