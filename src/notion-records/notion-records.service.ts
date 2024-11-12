@@ -13,10 +13,10 @@ export class NotionRecordsService {
     this.notion = new Client({ auth: process.env.API_KEY });
   }
 
-  async create(createNotionRecordDto: CreateNotionRecordDto) {
+  handlePropreties(record: CreateNotionRecordDto | UpdateNotionRecordDto) {
     const properties: any = {};
 
-    for (const [key, value] of Object.entries(createNotionRecordDto)) {
+    for (const [key, value] of Object.entries(record)) {
       if (value !== undefined) {
         switch (key) {
           case "Company":
@@ -67,6 +67,12 @@ export class NotionRecordsService {
       }
     }
 
+    return properties;
+  }
+
+  async create(createNotionRecordDto: CreateNotionRecordDto) {
+    const properties = this.handlePropreties(createNotionRecordDto);
+
     try {
       await this.notion.pages.create({
         parent: { database_id: this.databaseId },
@@ -101,8 +107,19 @@ export class NotionRecordsService {
     }
   }
 
-  update(id: number, updateNotionRecordDto: UpdateNotionRecordDto) {
-    return `This action updates a #${id} notionRecord`;
+  async update(id: string, updateNotionRecordDto: UpdateNotionRecordDto) {
+    const existingRecord = await this.findOne(id);
+
+    const properties = this.handlePropreties(updateNotionRecordDto);
+
+    try {
+      await this.notion.pages.update({
+        page_id: existingRecord.id,
+        properties,
+      });
+    } catch (error) {
+      utils.treatUnexpectedError(error);
+    }
   }
 
   async remove(id: number) {
