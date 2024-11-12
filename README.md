@@ -66,7 +66,6 @@ src/
 │ ├── notion-record.service.ts
 │ └── notion-record.module.ts
 ├── utils/
-
 │ └── utils.ts
 ├── app.controller.ts
 ├── app.module.ts
