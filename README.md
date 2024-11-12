@@ -1,73 +1,81 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Projeto API de Registros no Notion
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Este projeto é uma API desenvolvida com o **NestJS**, que permite criar, atualizar e gerenciar registros relacionados a campanhas e dados associados a empresas. A API suporta operações como criação e atualização de registros de campanhas, incluindo dados como descrição, data planejada, imagens e muito mais.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Tecnologias Utilizadas
 
-## Description
+- **NestJS**: Framework NodeJs para construção da API
+- **TypeScript**: Linguagem de programação utilizada
+- **Class-Validator**: Para validação dos dados recebidos
+- **Class-Transformer**: Para transformação dos dados de entrada
+- **Swagger**: Para gerar a documentação da API
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Use a API
 
-## Installation
+Essa aplicação possui um deploy disponível através do link https://backend-0k01.onrender.com esse deploy fica offline e assim que requisitado, online, demora cerca de um minuto para entrar no ar.
+
+## Instalação
+
+### 1. Clonando o repositório
+
+Clone o repositório para sua máquina local utilizando o comando abaixo:
 
 ```bash
-$ npm install
+git clone https://github.com/Jolifox-test/backend.git
 ```
 
-## Running the app
+### 2. Instalando as dependências
+
+Entre na pasta do projeto e instale as dependências:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+cd backend
+npm i
 ```
 
-## Test
+### 3. Configuração o Banco de Dados
+
+Para usar a API, você precisará de um banco de dados configurado, o id desse banco e uma key da API do Notion.
+
+Crie um arquivo .env cópia do .env.example e configure as variaveis de ambiente.
+
+### 4. Executando a aplicação
+
+Para rodar a aplicação em modo de desenvolvimento, utilize o seguinte comando:
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm run start:dev
 ```
 
-## Support
+A aplicação estará disponível em http://localhost:3000. Caso deseje uma outra porta, use a variável PORT no .env.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Endpoints
 
-## Stay in touch
+A API gera automaticamente uma documentação interativa através do Swagger. Para acessar a documentação, basta iniciar o servidor da API e navegar até http://localhost:3000/api-docs.
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Estrutura do Projeto
 
-## License
+A estrutura do projeto é a seguinte:
 
-Nest is [MIT licensed](LICENSE).
+```bash
+src/
+│
+├── notion-records/
+│ ├── dto/
+│ ├── notion-record.controller.ts
+│ ├── notion-record.service.ts
+│ └── notion-record.module.ts
+├── utils/
+
+│ └── utils.ts
+├── app.controller.ts
+├── app.module.ts
+├── app.service.ts
+├── main.ts
+│
+└── .env
+```
+
+## Licença
+
+Este projeto é licenciado sob a MIT License - veja o arquivo LICENSE para mais detalhes.
