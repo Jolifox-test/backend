@@ -6,12 +6,8 @@ import utils from "../utils/utils";
 
 @Injectable()
 export class NotionRecordsService {
-  private readonly notion: Client;
+  private readonly notion = new Client({ auth: process.env.API_KEY });
   private readonly databaseId = process.env.DATABASE_ID;
-
-  constructor() {
-    this.notion = new Client({ auth: process.env.API_KEY });
-  }
 
   handlePropreties(record: CreateNotionRecordDto | UpdateNotionRecordDto) {
     const properties: any = {};
@@ -101,14 +97,14 @@ export class NotionRecordsService {
     }
 
     if (response.results.length > 0) {
-      return response.results[0];
+      return response.results;
     } else {
       throw new NotFoundException(`Nenhum registro encontrado com o id: ${id}`);
     }
   }
 
   async update(id: string, updateNotionRecordDto: UpdateNotionRecordDto) {
-    const existingRecord = await this.findOne(id);
+    const existingRecord = (await this.findOne(id))[0];
 
     const properties = this.handlePropreties(updateNotionRecordDto);
 
@@ -122,31 +118,11 @@ export class NotionRecordsService {
     }
   }
 
-  async remove(id: number) {
-    let response: any;
+  async remove(id: string) {
+    const existingRecord = await this.findOne(id);
 
     try {
-      response = await this.notion.databases.query({
-        database_id: this.databaseId,
-        filter: {
-          property: "ID",
-          number: {
-            equals: id,
-          },
-        },
-      });
-    } catch (error) {
-      utils.treatUnexpectedError(error);
-    }
-
-    if (response.results.length === 0) {
-      throw new NotFoundException(
-        `Nenhum registro com o id: ${id} foi encontrado!`,
-      );
-    }
-
-    try {
-      for (const page of response.results) {
+      for (const page of existingRecord) {
         await this.notion.pages.update({
           page_id: page.id,
           archived: true,
